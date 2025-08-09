@@ -9,24 +9,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from langchain_openai import ChatOpenAI
-
 from browser_use import Agent
 from browser_use.agent.views import AgentHistoryList
 from browser_use.browser import BrowserProfile, BrowserSession
+from browser_use.llm import ChatOpenAI
 
-llm = ChatOpenAI(model='gpt-4o')
+llm = ChatOpenAI(model='gpt-4.1')
 
 
 async def main():
 	async with BrowserSession(
 		browser_profile=BrowserProfile(
 			headless=False,
-			disable_security=True,
-			trace_path='./tmp/result_processing',
-			no_viewport=False,
-			window_width=1280,
-			window_height=1000,
+			traces_dir='./tmp/result_processing',
+			window_size={'width': 1280, 'height': 1000},
 			user_data_dir='~/.config/browseruse/profiles/default',
 		)
 	) as browser_session:
